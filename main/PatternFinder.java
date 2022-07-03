@@ -13,41 +13,54 @@ public class PatternFinder {
 	return new String(array);
     }
     private static void singletonMiner(String mine, int length) throws SingletonException{
-	for (int start = 0; start < mine.length() - length; start++) {
-	    int i;
-	    for (i = start + 1; i < start + length; i++)
-		if (mine.charAt(i) != mine.charAt(i - 1))
-		    break;
-	    if (i == start + length)
-		throw new SingletonException(mine.substring(start, start + length), start);
-	}
+		for (int start = 0; start < mine.length() - length; start++) {
+			int i;
+			for (i = start + 1; i < start + length; i++) {
+				if (mine.charAt(i) != mine.charAt(i - 1)) {
+					break;
+				}
+			}
+			if (i == start + length) {
+				throw new SingletonException(mine.substring(start, start + length), start);
+			}
+		}
     }
 
     public static void main(String[] args) {
-	Scanner keyboard = new Scanner(System.in);
-	//Step 1: handling input...
-	System.out.println("Enter the length of random string: ");
-	int patternMaxLength = 10;//you need to update this part so that the value is given by the user via keyboard!
-	int randomStringLength = keyboard.nextInt();
-	while (true) {
-	    try {
-		if (randomStringLength < 100000 || randomStringLength > 1000000000)
-		    throw new NumberFormatException();
-	    } catch (NumberFormatException e) {
-		System.out.println("Try again!");
-		randomStringLength = keyboard.nextInt();
-		continue;
-	    }
-	    break;
-	}
-	//Step 2: generating random string...
-	String randomString = randomStringGenerator(randomStringLength);
-	//Step 3: finding the interesting patterns
-    	try {
-    	    for (int length = patternMaxLength; length > 0; length--)
-    		singletonMiner(randomString, length);
-    	} catch (Exception exp) {
-    	    System.out.println(exp.getMessage());
-    	}
+		Scanner keyboard = new Scanner(System.in);
+		//Step 1: handling input...
+		System.out.println("Enter the length of random string: ");
+		int randomStringLength = keyboard.nextInt();
+		System.out.println("Enter the maximum length of special patterns: ");
+		int patternMaxLength = keyboard.nextInt();
+
+		while (true) {
+			try {
+				if (randomStringLength < 100000 || randomStringLength > 1000000000) {
+					throw new NumberFormatException();
+				} else if (patternMaxLength < 3 || patternMaxLength > 15) {
+					throw new NumberFormatException();
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Try again! " +
+									"\nRandom string range 100k-1bil" +
+									"\nSpecial patterns range 3-15");
+				System.out.println("Enter the length of random string: ");
+				randomStringLength = keyboard.nextInt();
+				System.out.println("Enter the maximum length of special patterns: ");
+				patternMaxLength = keyboard.nextInt();
+				continue;
+			}
+			break;
+		}
+		//Step 2: generating random string...
+		String randomString = randomStringGenerator(randomStringLength);
+		//Step 3: finding the interesting patterns
+			try {
+				for (int length = patternMaxLength; length > 0; length--)
+				singletonMiner(randomString, length);
+			} catch (Exception exp) {
+				System.out.println(exp.getMessage());
+			}
     }
 }
