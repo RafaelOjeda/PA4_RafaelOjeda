@@ -12,7 +12,7 @@ public class PatternFinder {
 	    array[i] = (char) ('a' + random.nextInt(26));
 	return new String(array);
     }
-    private static void singletonMiner(String mine, int length) throws SingletonException{
+    private static void singletonMiner(String mine, int length) throws SingletonException {
 		for (int start = 0; start < mine.length() - length; start++) {
 			int i;
 			for (i = start + 1; i < start + length; i++) {
@@ -26,6 +26,20 @@ public class PatternFinder {
 		}
     }
 
+	private static void arithmeticMiner(String mine, int length) throws ArithmeticOrderException {
+		for (int start = 0; start < mine.length() - length; start++) {
+			int i;
+			for (i = start + 1; i < start + length; i++) {
+				if (mine.charAt(i-1) !=  (char)(mine.charAt(i)-1)) { // If the previous char does not equal to the inner-loop char - 1 break;
+					break;
+				}
+			}
+			if (i == start + length) {
+				throw new ArithmeticOrderException(mine.substring(start, start + length), start);
+			}
+		}
+	}
+
     public static void main(String[] args) {
 		Scanner keyboard = new Scanner(System.in);
 		//Step 1: handling input...
@@ -34,7 +48,7 @@ public class PatternFinder {
 		System.out.println("Enter the maximum length of special patterns: ");
 		int patternMaxLength = keyboard.nextInt();
 
-		while (true) {
+		while (true) { // Input handling
 			try {
 				if (randomStringLength < 100000 || randomStringLength > 1000000000) {
 					throw new NumberFormatException();
@@ -57,10 +71,20 @@ public class PatternFinder {
 		String randomString = randomStringGenerator(randomStringLength);
 		//Step 3: finding the interesting patterns
 			try {
-				for (int length = patternMaxLength; length > 0; length--)
-				singletonMiner(randomString, length);
-			} catch (Exception exp) {
-				System.out.println(exp.getMessage());
+				for (int length = patternMaxLength; length > 0; length--) {
+					singletonMiner(randomString, length);
+					arithmeticMiner(randomString, length);
+//					arithmeticReverseMiner(randomString, length);
+//					arithmeticMiner(randomString, length);
+//					tripartiteMiner(randomString, length);
+//					bipartiteMiner(randomString, length);
+//					palindromeMiner(randomString, length);
+				}
+			} catch (SingletonException singleton) {
+				System.out.println(singleton.getMessage());
+			}
+			catch (ArithmeticOrderException arithmeticOrder) {
+				System.out.println(arithmeticOrder.getMessage());
 			}
     }
 }
