@@ -40,6 +40,20 @@ public class PatternFinder {
 		}
 	}
 
+	private static void arithmeticReverseMiner(String mine, int length) throws ArithmeticReverseOrderException {
+		for (int start = 0; start < mine.length() - length; start++) {
+			int i;
+			for (i = start + 1; i < start + length; i++) {
+				if (mine.charAt(i-1) !=  (char)(mine.charAt(i)+1)) { // If the previous char does not equal to the inner-loop char - 1 break;
+					break;
+				}
+			}
+			if (i == start + length) {
+				throw new ArithmeticReverseOrderException(mine.substring(start, start + length), start);
+			}
+		}
+	}
+
     public static void main(String[] args) {
 		Scanner keyboard = new Scanner(System.in);
 		//Step 1: handling input...
@@ -74,17 +88,17 @@ public class PatternFinder {
 				for (int length = patternMaxLength; length > 0; length--) {
 					singletonMiner(randomString, length);
 					arithmeticMiner(randomString, length);
-//					arithmeticReverseMiner(randomString, length);
-//					arithmeticMiner(randomString, length);
+					arithmeticReverseMiner(randomString, length);
 //					tripartiteMiner(randomString, length);
 //					bipartiteMiner(randomString, length);
 //					palindromeMiner(randomString, length);
 				}
 			} catch (SingletonException singleton) {
 				System.out.println(singleton.getMessage());
-			}
-			catch (ArithmeticOrderException arithmeticOrder) {
+			} catch (ArithmeticOrderException arithmeticOrder) {
 				System.out.println(arithmeticOrder.getMessage());
+			} catch (ArithmeticReverseOrderException arithmeticReverseOrder) {
+				System.out.println(arithmeticReverseOrder.getMessage());
 			}
     }
 }
