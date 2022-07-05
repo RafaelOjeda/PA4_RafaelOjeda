@@ -27,6 +27,7 @@ public class PatternFinder {
     }
 
 	private static void arithmeticMiner(String mine, int length) throws ArithmeticOrderException {
+		// Checks to see if the string in alphabetical order
 		for (int start = 0; start < mine.length() - length; start++) {
 			int i;
 			for (i = start + 1; i < start + length; i++) {
@@ -41,6 +42,7 @@ public class PatternFinder {
 	}
 
 	private static void arithmeticReverseMiner(String mine, int length) throws ArithmeticReverseOrderException {
+		// Checks to see if the string is in reverse alphabetical order
 		for (int start = 0; start < mine.length() - length; start++) {
 			int i;
 			for (i = start + 1; i < start + length; i++) {
@@ -93,12 +95,18 @@ public class PatternFinder {
 //					bipartiteMiner(randomString, length);
 //					palindromeMiner(randomString, length);
 				}
-			} catch (SingletonException singleton) {
-				System.out.println(singleton.getMessage());
-			} catch (ArithmeticOrderException arithmeticOrder) {
-				System.out.println(arithmeticOrder.getMessage());
-			} catch (ArithmeticReverseOrderException arithmeticReverseOrder) {
-				System.out.println(arithmeticReverseOrder.getMessage());
+			}
+//			catch (SingletonException singleton) {
+//				System.out.println(singleton.getMessage());
+//			}
+//			catch (ArithmeticOrderException arithmeticOrder) {
+//				System.out.println(arithmeticOrder.getMessage());
+//			}
+//			catch (ArithmeticReverseOrderException arithmeticReverseOrder) {
+//				System.out.println(arithmeticReverseOrder.getMessage());
+//			}
+			catch (BalancedTripartiteException balancedTripartite) {
+				System.out.println(balancedTripartite.getMessage());
 			}
     }
 }
