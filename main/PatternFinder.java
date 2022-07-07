@@ -5,7 +5,7 @@ import java.util.*;
 
 public class PatternFinder {
 
-	// isTripartite
+	// isTripartite returns boolean whether it is a tripartite or not
 	private static boolean isTripartite(String inputString) {
 
 		int start = 0;
@@ -19,12 +19,33 @@ public class PatternFinder {
 			String part2 = inputString.substring(length/3, (2 * (length /3)));
 			String part3 = inputString.substring(2 * (length/3));
 
-			// Checks if all the 3 substrings are equal.
+			// Checks if all the 3 substrings are equal if it is return true if it's not return false.
 			return part1.equals(part2) && part1.equals(part3);
 		}
+		// returns false because it is not divisible by 3
 		return false;
 	}
-	
+
+	// isBipartite returns boolean whether it is a bipartite or not
+	private static boolean isBipartite(String inputString) {
+
+		int start = 0;
+		int length = inputString.length();
+
+		if (length % 2 == 0) {
+			// Checks whether it can be divided by 2 to continue with the bipartite checker.
+
+			// Divides string into 2 substrings
+			String part1 = inputString.substring(start, (length / 2));
+			String part2 = inputString.substring(length/2);
+
+			// Checks if both substrings are equal if it is return true if it's not return false.
+			return part1.equals(part2);
+		}
+		// returns false because it is not divisible by 2
+		return false;
+	}
+
     private static String randomStringGenerator(int length) {// generates a string made of randomly generated lowercase
 							     // letters.
 	Random random = new Random(System.nanoTime());
@@ -82,8 +103,21 @@ public class PatternFinder {
 
 			String currentString = mine.substring(start, start + length);
 
+			// If it is a tripartite it goes into the if statement.
 			if (isTripartite(currentString)) {
 				throw new BalancedTripartiteException(currentString, start);
+			}
+		}
+	}
+
+	private static void bipartiteMiner(String mine, int length) throws BalancedBipartiteException {
+		for (int start = 0; start <= mine.length() - length; start++) {
+
+			String currentString = mine.substring(start, start + length);
+
+			// If it is a tripartite it goes into the if statement.
+			if (isBipartite(currentString)) {
+				throw new BalancedBipartiteException(currentString, start);
 			}
 		}
 	}
@@ -139,23 +173,25 @@ public class PatternFinder {
 		//Step 3: finding the interesting patterns
 			try {
 				for (int length = patternMaxLength; length > 0; length--) {
-//					singletonMiner(randomString, length);
-//					arithmeticMiner(randomString, length);
-//					arithmeticReverseMiner(randomString, length);
+					singletonMiner(randomString, length);
+					arithmeticMiner(randomString, length);
+					arithmeticReverseMiner(randomString, length);
 					tripartiteMiner(randomString, length);
-//					bipartiteMiner(randomString, length);
+					bipartiteMiner(randomString, length);
 //					palindromeMiner(randomString, length);
 				}
 			}
-//			catch (SingletonException singleton) {
-//				System.out.println(singleton.getMessage());
-//			} catch (ArithmeticOrderException arithmeticOrder) {
-//				System.out.println(arithmeticOrder.getMessage());
-//			} catch (ArithmeticReverseOrderException arithmeticReverseOrder) {
-//				System.out.println(arithmeticReverseOrder.getMessage());
-//			}
-			catch (BalancedTripartiteException balancedTripartite) {
+			catch (SingletonException singleton) {
+				System.out.println(singleton.getMessage());
+			} catch (ArithmeticOrderException arithmeticOrder) {
+				System.out.println(arithmeticOrder.getMessage());
+			} catch (ArithmeticReverseOrderException arithmeticReverseOrder) {
+				System.out.println(arithmeticReverseOrder.getMessage());
+			} catch (BalancedTripartiteException balancedTripartite) {
 				System.out.println(balancedTripartite.getMessage());
+			}
+			catch (BalancedBipartiteException balancedBipartite) {
+				System.out.println(balancedBipartite.getMessage());
 			}
 //			catch (PalindromeException palindrome) {
 //				System.out.println(palindrome.getMessage());
