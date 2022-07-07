@@ -8,7 +8,7 @@ public class ArithmeticReverseOrderException extends Exception {
 
     @Override
     public String getMessage() {
-        return arithmeticReverseOrderString + " is a arithmetic string of order 1 that is found at index " + occurrenceIndex + "!";
+        return arithmeticReverseOrderString + " is a arithmetic string of reverse order 1 that is found at index " + occurrenceIndex + "!";
     }
 
     public ArithmeticReverseOrderException (String arithmeticReverseOrderString, int index) {
