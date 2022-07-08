@@ -1,6 +1,7 @@
 package util;
 
 public class SingletonException extends Exception{//e.g. "bbbbbbb", "mmmm", "nn"
+    // Exception for when singleton  is found it displays starting index and the singleton string
     private String singletonString;
     private int occurrenceIndex;
     @Override

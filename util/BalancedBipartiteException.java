@@ -1,7 +1,7 @@
 package util;
 
 public class BalancedBipartiteException extends Exception {
-
+    // Exception for when bipartite is found it displays starting index and the bipartite
     private String balancedBipartiteString;
 
     private int occurrenceIndex;

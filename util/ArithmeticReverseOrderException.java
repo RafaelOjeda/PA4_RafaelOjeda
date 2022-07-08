@@ -1,7 +1,7 @@
 package util;
 
 public class ArithmeticReverseOrderException extends Exception {
-
+    // Exception for when reverse alphabetical order  is found it displays starting index and the reverse alphabetical order string
     private String arithmeticReverseOrderString;
 
     private int occurrenceIndex;

@@ -1,7 +1,7 @@
 package util;
 
 public class ArithmeticOrderException extends Exception {
-
+    // Exception for when alphabetical order  is found it displays starting index and the alphabetical order string
     private String arithmeticOrderString;
     private int occurrenceIndex;
     @Override
